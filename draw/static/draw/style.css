@@ -1,0 +1,161 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    background-color: #fefae0;
+    font-family: 'Otomanopee One', sans-serif;
+}
+
+.background {
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    position: fixed;
+    height: 100%;
+    min-width: 100vw;
+    display: grid;
+    grid-gap: 0px;
+    border: none;
+    padding: 0;
+    background-color: #fefae0;
+}
+
+#title {
+    text-align: center;
+    font-weight: bold;
+    font-family: Lucida Sans;
+}
+
+#title-container {
+    background-color: #dda15e;
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+
+.image {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 400px;
+    height: 400px;
+}
+
+#image-1 {
+    background-color: #f5f5f5;
+    grid-column-start: 2;
+    grid-column-end: 8;
+    grid-row-start: 2;
+    grid-row-end: 7;
+}
+
+#image-2 {
+    background-color: #f5f5f5;
+    grid-column-start: 12;
+    grid-column-end: 17;
+    grid-row-start: 2;
+    grid-row-end: 7;
+}
+
+#image-3 {
+    background-color: #f5f5f5;
+    grid-column-start: 2;
+    grid-column-end: 8;
+    grid-row-start: 8;
+    grid-row-end: 13;
+}
+
+#image-4 {
+    background-color: #f5f5f5;
+    grid-column-start: 12;
+    grid-column-end: 17;
+    grid-row-start: 8;
+    grid-row-end: 13;
+}
+
+img {
+    width: 400px;
+    height: 300px;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.event-title {
+    text-align: center;
+    font-weight: bold;
+    font-family: Lucida Sans;
+    color: #606c38;
+}
+
+
+/* https://www.w3schools.com/howto/howto_css_bottom_nav.asp */
+
+
+/* bottom menu bar */
+
+
+/* Place the navbar at the bottom of the page, and make it stick */
+
+.navbar {
+    background-color: #F5F5F5;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+}
+
+
+/* Style the links inside the navigation bar */
+
+.navbar a {
+    float: left;
+    display: block;
+    color: #545454;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 27px;
+}
+
+
+/* Change the color of links on hover */
+
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+
+/* Add a color to the active/current link */
+
+.navbar a.active {
+    background-color: #dda15e;
+    /*#545454*/
+    color: white;
+}
+
+.card {
+    border-radius: 10px;
+    padding: 20px 20px 7px 40px;
+    opacity: .75;
+}
+
+footer {
+    position: absolute;
+    border-top: 5px solid rgb(255, 255, 255);
+    filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.4));
+    /* background-color: pink; */
+    bottom: 15px;
+    height: 115px;
+    width: 100%;
+    font-size: 40px;
+    text-align: center;
+    padding: 20px;
+}
+
+footer a {
+    display: block;
+    text-decoration: none;
+    color: white;
+    float: left;
+    width: 25%;
+    filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.4));
+}

@@ -12,6 +12,7 @@
     <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
 
     <style type="text/css">
+
     </style>
 
 </head>
@@ -49,27 +50,27 @@
     var socket = new WebSocket(
         'ws://' + window.location.host + '/ws/draw');
 
-    if(url.indexOf("small") > -1){
-        tool.onMouseDown = function (event) { //http://paperjs.org/reference/tool/ path examples
+    if (url.indexOf("small") > -1) {
+        tool.onMouseDown = function(event) { //http://paperjs.org/reference/tool/ path examples
             path = new paper.Path();
             path.strokeColor = color;
             path.add(event.point);
             // You may need to add code here if you want to pass any other information.
-            socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + ", \"color\" : " + "\""+color+"\"" + "}" );
+            socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + ", \"color\" : " + "\"" + color + "\"" + "}");
         }
 
-        tool.onMouseDrag = function (event) {
+        tool.onMouseDrag = function(event) {
             path.add(event.point);
-            socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + ", \"color\" : " + "\""+color+"\"" + "}" );
+            socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + ", \"color\" : " + "\"" + color + "\"" + "}");
         }
     }
 
-    if(url.indexOf("large") > -1){
-        socket.onmessage = function (receivedMessage) {
+    if (url.indexOf("large") > -1) {
+        socket.onmessage = function(receivedMessage) {
             var received = JSON.parse(receivedMessage.data);
             console.log("Received: " + JSON.stringify(received));
             var id = received.uid;
-            if (! smallSockets.has(id)) {
+            if (!smallSockets.has(id)) {
                 smallSockets.set(id, new paper.Path());
             }
             smallSockets.get(id).strokeColor = received.color;
@@ -78,10 +79,9 @@
         }
     }
 
-    socket.onclose = function (e) {
+    socket.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
     };
-
 </script>
 
 </html>
