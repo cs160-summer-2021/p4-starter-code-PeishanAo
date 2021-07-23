@@ -1,0 +1,314 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  	<title>P3 Coloring</title>
+
+	<script type="text/javascript" src="{% static 'coloring/vendors/jquery/jquery-3.3.1.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'coloring/vendors/paper/paper-full.min.js' %}"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+	<style type="text/css">
+		html,body{
+		    	padding: 0;
+                margin: 0;
+		    	height: 100%;
+		    	background-color: #fefae0;
+		    }
+
+		.background {
+			grid-template-columns: repeat(20, 1fr);
+			grid-template-rows: repeat(20, 1fr);
+			position: fixed;
+			height: 100%;
+			min-width: 100vw;
+			display: grid;
+			grid-gap: 0px;
+			border: none;
+			padding: 0;
+			background-color: #fefae0;
+		}
+
+		#title{
+			text-align: center;
+			font-weight: bold;
+			font-family: Lucida Sans;
+		}
+		#title-container{
+			background-color: #dda15e;
+			padding-top: 20px;
+			padding-bottom: 15px;
+		}
+		.image {
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			width:400px;
+			height: 400px;
+		}
+		#image-1{
+			background-color: #f5f5f5;
+			grid-column-start: 2;
+		    grid-column-end: 8;
+		    grid-row-start: 2;
+		    grid-row-end: 7;
+		}
+		#image-2{
+			background-color: #f5f5f5;
+			grid-column-start: 12;
+		    grid-column-end: 17;
+		    grid-row-start: 2;
+		    grid-row-end: 7;
+		}
+		#image-3{
+			background-color: #f5f5f5;
+			grid-column-start: 2;
+		    grid-column-end: 8;
+		    grid-row-start: 8;
+		    grid-row-end: 13;
+		}
+		#image-4{
+			background-color: #f5f5f5;
+			grid-column-start: 12;
+		    grid-column-end: 17;
+		    grid-row-start: 8;
+		    grid-row-end: 13;
+		}
+		img {
+			width:400px;
+			height: 300px;
+		    max-width: 100%;
+		    max-height: 100%;
+		}
+		.event-title{
+			text-align: center;
+			font-weight: bold;
+			font-family: Lucida Sans;
+			color: #606c38;
+		}
+		/* https://www.w3schools.com/howto/howto_css_bottom_nav.asp */
+		/* bottom menu bar */
+		/* Place the navbar at the bottom of the page, and make it stick */
+		.navbar {
+		  background-color: #F5F5F5;
+		  overflow: hidden;
+		  position: fixed;
+		  bottom: 0;
+		  width: 100%;
+		  height: 80px;
+		}
+
+		/* Style the links inside the navigation bar */
+		.navbar a {
+		  float: left;
+		  display: block;
+		  color: #545454;
+		  text-align: center;
+		  padding: 14px 16px;
+		  text-decoration: none;
+		  font-size: 27px;
+		}
+
+		/* Change the color of links on hover */
+		.navbar a:hover {
+		  background-color: #ddd;
+		  color: black;
+		}
+
+		/* Add a color to the active/current link */
+		.navbar a.active {
+		  background-color: #dda15e; /*#545454*/
+		  color: white;
+		}
+
+		.card{
+		    border-radius: 10px;
+		    padding:  20px 20px 7px 40px;
+		    opacity: .75;
+		}
+
+	</style>
+
+	<script type="text/javascript" canvas="canvas">
+		window.onload = function() {
+			var colorWell;
+			var defaultColor = "#000000";
+			var curr = document.getElementById('current-color');
+			function startup() {
+			  colorWell = document.querySelector("#colorWell");
+			  colorWell.value = defaultColor;
+			  colorWell.addEventListener("input", getColor, false);
+			  colorWell.addEventListener("change", getColor, false);
+			  colorWell.select();
+			}
+			startup();
+
+			//var curr = "#000000";
+			function getColor(event) {
+				cp.history.push(event.target.value);
+				//curr = event.target.value;
+				curr.style.backgroundColor=cp.history[cp.history.length - 1];
+			}
+
+			document.getElementById("add-button").onclick = function() {addToPalette()};
+			function addToPalette() {
+				/*cp.options.push(cp.history[cp.history.length - 1]);
+				var $swatch = $("<div>").css("background-color", cp.history[cp.history.length - 1])
+									   .addClass("swatch");
+				cp.$container.append($swatch);*/
+
+				var $swatch = $("<div>").css("background-color", cp.history[cp.history.length - 1])
+									   .addClass("swatch");
+					$swatch.click(function(){
+						// add color to the color palette history
+					  	cp.history.push($(this).css("background-color"));
+					  	curr.style.backgroundColor=cp.history[cp.history.length - 1];
+					});
+					cp.options.push(cp.history[cp.history.length - 1]);
+					cp.$container.append($swatch);
+			}
+
+			//
+
+			var canvas = document.getElementById('myCanvas');
+
+			// coloring page
+			var mandala = {
+				item: null,
+				lastClicked: null,
+				filePath: '/static/coloring/images/mandala-freepik.svg'
+			};
+
+			// color palette
+			var cp = {
+				history: ["#000000"], // black selected by default
+				options: [],
+				$container: $('#color-palette')
+			}
+
+			function myCustomInteraction() {
+				var tool = new paper.Tool();
+
+				tool.onMouseDown = function (event) {
+				    var hit = mandala.item.hitTest(event.point, { tolerance: 10, fill: true });
+				    if (hit) {
+				    		// Color pallette keeps track of the full history of colors, though we
+				    		// only color in with the most-recent color.
+				        hit.item.fillColor = cp.history[cp.history.length - 1];
+				    }
+				}
+			}
+
+			// create a color palette with the given colors
+			function createColorPalette(colors){
+
+				// create a swatch for each color
+				for (var i = colors.length - 1; i >= 0; i--) {
+					var $swatch = $("<div>").css("background-color", colors[i])
+									   .addClass("swatch");
+					$swatch.click(function(){
+						// add color to the color palette history
+					  	cp.history.push($(this).css("background-color"));
+					  	curr.style.backgroundColor=cp.history[cp.history.length - 1];
+					});
+					cp.$container.append($swatch);
+				}
+			}
+
+			// loads a set of colors from a json to create a color palette
+			function getColorsCreatePalette(){
+				cp.$container.html(" ");
+				$.getJSON('/static/coloring/vendors/material/material-colors.json', function(colors){
+					var keys = Object.keys(colors);
+					for (var i = keys.length - 1; i >= 0; i--) {
+						cp.options.push(colors[keys[i]][400]);
+					}
+					createColorPalette(cp.options);
+				});
+			}
+
+			
+
+			function init(custom){
+				paper.setup(canvas);
+				getColorsCreatePalette();
+
+				paper.project.importSVG(mandala.filePath, function(item) {
+					mandala.item = item._children["design-freepik"];
+				    paper.project.insertLayer(0,mandala.item);
+				    paper.project.layers[0].fitBounds(paper.view.bounds);
+
+				    if (custom) {
+				    	//newInteraction();
+				    	myCustomInteraction();
+				    } else {
+				    	myGradientInteraction();
+				    }
+
+				});
+			}
+
+			// Set up the mandala interactivity.
+			init(true);
+		}
+	</script>
+</head>
+<body>
+	<br><br>
+	<div id="title-container">
+		<h1 id="title">Welcome to Food Share!</h1>
+	</div>
+	<br><br>
+	<h2 style="text-align: center; font-family: Lucida Sans; padding-top: 10px; color:#606c38; text-shadow: 2px 2px #606c38;">SEARCH 1 PAGE - TODO<h2>
+	<div class="background">
+
+
+		<div class="image" id="image-1" onclick="jumpToNext()">
+			<img src="https://images2.minutemediacdn.com/image/upload/c_crop,h_1766,w_2626,x_0,y_88/v1560363126/shape/mentalfloss/81625-istock-946512878.jpg?itok=P1zWx_Zn">
+			<br><br>
+			<p class="event-title">Sunny Sunday Picnic 7/24</p>
+		</div>
+		<div class="image" id="image-2" onclick="jumpToNext()">
+			<img src="https://assets.bonappetit.com/photos/57e07ae37c2b8d776078187c/master/w_1600%2Cc_limit/undefined">
+			<br><br>
+			<p class="event-title">Taco Tuesday 7/27</p>
+		</div>
+		<div class="image" id="image-3" onclick="jumpToNext()">
+			<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpQN894y-rSKqTCS13uI2Mk6XdckFyTRxQxQ&usqp=CAU">
+			<br><br>
+			<p class="event-title">Chinese Potluck 8/1</p>
+		</div>
+		<div class="image" id="image-4" onclick="jumpToNext()">
+			<img src="https://bustickets.com/wp-content/uploads/2019/07/Best_Cities_Delicious_Desserts.jpg">
+			<br><br>
+			<p class="event-title">Delicious Desserts  8/5</p>
+		</div>
+
+		<div class="navbar">
+			<a href="http://localhost:8000/draw/home">HOME</a>
+	  		<a href="http://localhost:8000/draw/search1" class="active">Search 1</a>
+	  		<a href="http://localhost:8000/draw/search2">Search 2</a>
+	  		<a href="http://localhost:8000/draw/info">More Info</a>
+		</div>
+
+	</div>
+
+	<script type="text/javascript">
+		$("#colorWell").change(function(event) {
+		    console.log($(this).val());
+		    $("#color_front").css('background-color',$(this).val());
+		});
+
+		$("#color_front").click(function(event) {
+		    $("#colorWell").click();
+		});
+
+		function jumpToNext(){
+			location.href = 'http://localhost:8000/draw/info';
+		}
+	</script>
+
+	
+</body>
+</html>
