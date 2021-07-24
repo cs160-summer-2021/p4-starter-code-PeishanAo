@@ -10,20 +10,27 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Otomanopee+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'draw/vendors/bootstrap/css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'draw/style.css' %}" />
 
 </head>
 
 <body>
+    <br><br><br><br>
     <br><br>
+    <h1>Welcome to Food Share!</h1>
+    <br>
+
+    <!--<br><br>
     <div id="title-container">
         <h1 id="title">Welcome to Food Share!</h1>
     </div>
-    <br><br>
+    <br><br>-->
     <h2>SEARCH FOR FOOD INFO</h2>
     <div class="background">
 
         <!-- action="" TODO -->
-        <form id="input-box" action="/action_page.php" style="text-align: center;">
+        <form id="input-box" action="http://localhost:8000/draw/info">
             <label for="searchNumber" style="font-family: Lucida Sans; color:#606c38; font-size: 35px">Enter the
 						food number:</label>
             <br><br>

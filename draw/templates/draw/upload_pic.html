@@ -55,4 +55,46 @@
     </footer>
 </body>
 
+<script>
+    var uid = Date.now() % 10000;
+    var smallSockets = new Map();
+    var tag;
+    var src;
+
+    // getting the URL (you may want to use for Exercise 3)
+    var url = window.location.href;
+
+    var socket = new WebSocket(
+        'ws://' + window.location.host + '/ws/draw');
+    addEventListener("mousedown", mouseDown);
+    function mouseDown() {
+            //var element = document.elementFromPoint(event.clientX, event.clientX);
+            tag = event.target.tagName;
+            console.log("element tag: " + tag);
+            // only send pic in this page
+            if(tag == 'IMG'){
+                src = event.target.src;
+                socket.send("{\"src\" : " + "\""+src+"\"" + ", \"tag\" : " + "\""+tag+"\"" + ", \"page\" : " + "\"upload_pic\"" + "}");
+            }
+            /*else{
+                var text = event.target.innerText;
+                console.log("element text: " + text);
+                socket.send("{\"text\" : " + "\""+text+"\"" + ", \"tag\" : " + "\""+tag+"\"" + "}");
+            }*/
+    }
+
+    if (url.indexOf("large") > -1) {
+        socket.onmessage = function(receivedMessage) {
+            var received = JSON.parse(receivedMessage.data);
+            console.log("Received: " + JSON.stringify(received));
+            console.log("element" + received.element);
+            document.body.appendChild(received.element); 
+        }
+    }
+
+    socket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+</script>
+
 </html>

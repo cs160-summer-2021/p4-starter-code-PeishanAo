@@ -27,7 +27,7 @@
         <h2>See you at the event!</h2>
         <br /><br />
         <button onclick="location.href='/draw/upload_description'" type="button" id="back">Back</button>
-        <button onclick="location.href='/draw/home'" type="button" id="next">Next</button>
+        <button onclick="location.href='/draw/home'; sendMessage();" type="button" id="next">Next</button>
     </div>
     <footer>
         <a href="/draw/home">
@@ -57,5 +57,51 @@
 
     </footer>
 </body>
+
+<script>
+    var uid = Date.now() % 10000;
+    var smallSockets = new Map();
+    var tag;
+    var src;
+
+    // getting the URL (you may want to use for Exercise 3)
+    var url = window.location.href;
+
+    var socket = new WebSocket(
+        'ws://' + window.location.host + '/ws/draw');
+    
+    function sendMessage(){
+        socket.send("{\"page\" : " + "\"confirmation\"" + "}");
+    }
+    /*addEventListener("mousedown", mouseDown);
+    function mouseDown() {
+            //var element = document.elementFromPoint(event.clientX, event.clientX);
+            var tag = event.target.tagName;
+            console.log("element tag: " + tag);
+            // only send text in this page
+            if(tag == 'IMG'){
+                var src = event.target.src;
+                socket.send("{\"src\" : " + "\""+src+"\"" + ", \"tag\" : " + "\""+tag+"\"" + "}");
+            }
+            else{
+                var text = event.target.innerText;
+                console.log("element text: " + text);
+                socket.send("{\"text\" : " + "\""+text+"\"" + ", \"tag\" : " + "\""+tag+"\"" + ", \"page\" : " + "upload_description" + "}");
+            }
+    }*/
+
+    if (url.indexOf("large") > -1) {
+        socket.onmessage = function(receivedMessage) {
+            var received = JSON.parse(receivedMessage.data);
+            console.log("Received: " + JSON.stringify(received));
+            console.log("element" + received.element);
+            document.body.appendChild(received.element); 
+        }
+    }
+
+    socket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+</script>
 
 </html>

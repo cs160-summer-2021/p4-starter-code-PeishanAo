@@ -19,30 +19,14 @@
 
 <body>
     <!-- You may change the dimensions of this canvas -->
-    <canvas id="myCanvas" width="750px" height="750px"></canvas>
+    <h1 style="text-align: center; padding-top: 20px; font-weight: bold;">Welcome to Food Share!</h1>
+    <h3 style="text-align: center; padding-top: 15px; padding-bottom: 15px;">Here are some amazing food for today!</h3>
+    <div id="myCanvas" width="750px" height="750px"></div>
+
 </body>
 <script>
-    // setting up the canvas and one paper tool
-    var canvas = document.getElementById('myCanvas');
-    paper.setup(canvas);
-    var tool = new paper.Tool();
     var uid = Date.now() % 10000;
-    var path = new paper.Path();
-    const color = getRandomColor();
-    path.strokeColor = color;
-    // keep track of small windows paths
     var smallSockets = new Map();
-    //smallSockets.set(uid,path);
-
-    // https://stackoverflow.com/questions/1484506/random-color-generator
-    function getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    }
 
     // getting the URL (you may want to use for Exercise 3)
     var url = window.location.href;
@@ -50,32 +34,38 @@
     var socket = new WebSocket(
         'ws://' + window.location.host + '/ws/draw');
 
-    if (url.indexOf("small") > -1) {
-        tool.onMouseDown = function(event) { //http://paperjs.org/reference/tool/ path examples
-            path = new paper.Path();
-            path.strokeColor = color;
-            path.add(event.point);
-            // You may need to add code here if you want to pass any other information.
-            socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + ", \"color\" : " + "\"" + color + "\"" + "}");
-        }
+    var tag;
+    var img;
+    var text;
 
-        tool.onMouseDrag = function(event) {
-            path.add(event.point);
-            socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + ", \"color\" : " + "\"" + color + "\"" + "}");
-        }
-    }
 
     if (url.indexOf("large") > -1) {
         socket.onmessage = function(receivedMessage) {
             var received = JSON.parse(receivedMessage.data);
             console.log("Received: " + JSON.stringify(received));
-            var id = received.uid;
-            if (!smallSockets.has(id)) {
-                smallSockets.set(id, new paper.Path());
+            if (received.page == "confirmation") {
+                document.getElementById('myCanvas').appendChild(img);
+                document.getElementById('myCanvas').appendChild(text);
             }
-            smallSockets.get(id).strokeColor = received.color;
-            smallSockets.get(id).add(new paper.Point(received.x, received.y));
-            // You will probably want to add some code here to draw more lines.
+            else{
+            tag = received.tag;
+            if (tag == 'IMG'){
+                img = document.createElement(tag);
+                img.src = received.src;
+                img.height = 200;
+                img.width = 200;
+                img.style.padding = "10px 10px 10px 10px"
+                //img.style.margin = 0;
+                //document.getElementById('myCanvas').appendChild(img);
+            }
+            else{
+                text = document.createElement(tag);
+                text.innerText = received.text;
+                text.style.fontSize = "20px";
+                text.style.padding = "0px 10px 10px 10px"
+                //document.getElementById('myCanvas').appendChild(text);
+            }
+            }
         }
     }
 
