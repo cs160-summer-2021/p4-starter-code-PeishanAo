@@ -30,5 +30,8 @@ def upload_description(request):
 def confirmation(request):
     return render(request, 'draw/confirmation.html')
 
-def info(request):
+def food_info(request):
     return render(request, 'draw/food_info.html')
+
+def info(request):
+    return render(request, 'draw/info.html')

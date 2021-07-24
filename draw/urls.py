@@ -13,5 +13,7 @@ urlpatterns = [
     path('upload_pic', views.upload_pic, name='upload_pic'),
     path('upload_description', views.upload_description, name='upload_description'),
     path('confirmation', views.confirmation, name='confirmation'),
-    path('info', views.info, name='food_info'),
+    path('food_info', views.food_info, name='food_info'),
+    path('info', views.info, name='info'),
+
 ]
