@@ -111,7 +111,15 @@ img #camera_roll {
     float: left;
 }
 
-#description {
+/*#description,#description_food,#descprition_ingredients{
+    margin-left: 6%;
+    font-size: 30pt;
+    height: 200px;
+    width: 850px;
+    border-radius: 15px;
+    background-color: white;
+}*/
+textarea{
     margin-left: 6%;
     font-size: 30pt;
     height: 200px;

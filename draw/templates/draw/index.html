@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
     <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'draw/vendors/bootstrap/css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'draw/style.css' %}" />
 
     <style type="text/css">
 
@@ -37,6 +39,19 @@
     var tag;
     var img;
     var text;
+    //var text2;
+    var text3;
+
+    function makeid(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * 
+     charactersLength));
+       }
+       return result;
+    }
 
 
     if (url.indexOf("large") > -1) {
@@ -44,8 +59,22 @@
             var received = JSON.parse(receivedMessage.data);
             console.log("Received: " + JSON.stringify(received));
             if (received.page == "confirmation") {
-                document.getElementById('myCanvas').appendChild(img);
-                document.getElementById('myCanvas').appendChild(text);
+                var container = document.createElement("div");
+                container.id = makeid(3);
+                container.setAttribute("style","width:220px;height:400px;float:left;text-align:center;background-color:#f5f5f5;padding:10px 10px 10px 10px;");
+                // asign a number to pic
+                document.getElementById("myCanvas").appendChild(container);
+                var foodNum = document.createElement("p");
+                foodNum.innerText = "Food #" + Math.floor(Math.random() * 10) + Math.floor(Math.random() * 10) + Math.floor(Math.random() * 10);
+                foodNum.style.fontSize = "20px";
+                document.getElementById(container.id).appendChild(foodNum);
+                // add image, text
+                document.getElementById(container.id).appendChild(img);
+                document.getElementById(container.id).appendChild(text);
+                //document.getElementById(container.id).appendChild(text2);
+                document.getElementById(container.id).appendChild(text3);
+                //document.getElementById('myCanvas').appendChild(img);
+                //document.getElementById('myCanvas').appendChild(text);
             }
             else{
             tag = received.tag;
@@ -55,15 +84,19 @@
                 img.height = 200;
                 img.width = 200;
                 img.style.padding = "10px 10px 10px 10px"
-                //img.style.margin = 0;
-                //document.getElementById('myCanvas').appendChild(img);
             }
             else{
                 text = document.createElement(tag);
-                text.innerText = received.text;
+                text.innerText = "Name: " + received.text;
                 text.style.fontSize = "20px";
-                text.style.padding = "0px 10px 10px 10px"
-                //document.getElementById('myCanvas').appendChild(text);
+
+                /*text2 = document.createElement(tag);
+                text2.innerText = "Description: " +received.text2;
+                text2.style.fontSize = "20px";*/
+
+                text3 = document.createElement(tag);
+                text3.innerText = "Ingredients: " +received.text3;
+                text3.style.fontSize = "20px";
             }
             }
         }
