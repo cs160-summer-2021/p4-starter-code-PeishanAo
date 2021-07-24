@@ -180,17 +180,9 @@ footer a {
     max-width: 100%;
     height: 100%;
     border-radius: 30px;
-<<<<<<< HEAD
 }
 
-/* search Page */
-
-#input-box{
-    text-align: center;
-    grid-column-start: 6;
-    grid-column-end: 16;
-    grid-row-start: 2;
-    grid-row-end: 8;
-=======
->>>>>>> cabdfec99e9ea8084ab4c283f92675ae517dc445
+.camera_roll {
+    width: 100px;
+    height: 100px;
 }
