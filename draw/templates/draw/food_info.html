@@ -5,10 +5,13 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Search 2</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'draw/style.css' %}" />
+    <title>Food Info</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Otomanopee+One&family=Yomogi&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Otomanopee+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'draw/vendors/bootstrap/css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'draw/style.css' %}" />
+
 </head>
 
 <body>
@@ -17,31 +20,25 @@
         <h1 id="title">Welcome to Food Share!</h1>
     </div>
     <br><br>
-    <h2 style="text-align: center; font-family: Lucida Sans; padding-top: 10px; color:#606c38; text-shadow: 2px 2px #606c38;">SEARCH 2 PAGE - TODO
+    <h2 style="text-align: center; font-family: Lucida Sans; padding-top: 10px; color:#606c38; text-shadow: 2px 2px #606c38;">FOOD INFO
         <h2>
             <div class="background">
 
+                <div class="food-pic">
+                    <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2012/2/29/0/0149359_Making-Taco_s4x3.jpg.rend.hgtvcom.616.462.suffix/1371603491866.jpeg">
+                    <br><br>
+                    <p class="event-title">Amazing Taco</p>
+                </div>
 
-                <div class="image" id="image-1" onclick="jumpToNext()">
-                    <img src="https://images2.minutemediacdn.com/image/upload/c_crop,h_1766,w_2626,x_0,y_88/v1560363126/shape/mentalfloss/81625-istock-946512878.jpg?itok=P1zWx_Zn">
+                <p id="recipe"><u>&nbsp;&nbsp;Click here to see my recipe!&nbsp;&nbsp;&nbsp;</u></p>
+
+                <div class="image profile">
+                    <img src="https://media.istockphoto.com/photos/young-african-woman-smiling-at-sunset-picture-id969233490?k=6&m=969233490&s=612x612&w=0&h=3UW-GHQ2CksIelqKk0UKgy_7qExPsn1g8B2Q0zzU1xo=">
                     <br><br>
-                    <p class="event-title">Sunny Sunday Picnic 7/24</p>
+                    <p class="event-title">Jenny Smith</p>
                 </div>
-                <div class="image" id="image-2" onclick="jumpToNext()">
-                    <img src="https://assets.bonappetit.com/photos/57e07ae37c2b8d776078187c/master/w_1600%2Cc_limit/undefined">
-                    <br><br>
-                    <p class="event-title">Taco Tuesday 7/27</p>
-                </div>
-                <div class="image" id="image-3" onclick="jumpToNext()">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpQN894y-rSKqTCS13uI2Mk6XdckFyTRxQxQ&usqp=CAU">
-                    <br><br>
-                    <p class="event-title">Chinese Potluck 8/1</p>
-                </div>
-                <div class="image" id="image-4" onclick="jumpToNext()">
-                    <img src="https://bustickets.com/wp-content/uploads/2019/07/Best_Cities_Delicious_Desserts.jpg">
-                    <br><br>
-                    <p class="event-title">Delicious Desserts 8/5</p>
-                </div>
+                <button type="button" id="next">Connect</button>
+
             </div>
 
             <footer>

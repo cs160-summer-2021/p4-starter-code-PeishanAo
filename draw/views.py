@@ -20,3 +20,15 @@ def search2(request):
 
 def info(request):
     return render(request, 'draw/info.html')
+
+def upload_pic(request):
+    return render(request, 'draw/upload_pic.html')
+
+def upload_description(request):
+    return render(request, 'draw/upload_description.html')
+
+def confirmation(request):
+    return render(request, 'draw/confirmation.html')
+
+def info(request):
+    return render(request, 'draw/food_info.html')

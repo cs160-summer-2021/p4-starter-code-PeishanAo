@@ -10,4 +10,8 @@ urlpatterns = [
     path('search1', views.search1, name='search1'),
     path('search2', views.search2, name='search2'),
     path('info', views.info, name='info'),
+    path('upload_pic', views.upload_pic, name='upload_pic'),
+    path('upload_description', views.upload_description, name='upload_description'),
+    path('confirmation', views.confirmation, name='confirmation'),
+    path('info', views.info, name='food_info'),
 ]
